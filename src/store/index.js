@@ -4,7 +4,8 @@
 export default {
   state: {
     isLogin: false,
-    lastRoute: null
+    lastRoute: null,
+    goods: []
   },
   mutations: {
     changeLoginStatus(state, isLogin) {
@@ -12,6 +13,15 @@ export default {
     },
     rememberLastRouter(state, name) {
       state.lastRoute = name
+    },
+    changeGoodsList(state, goods){
+      state.goods.push(goods)
+    },
+    changeGoodsListNumber(state, {number, index}) {
+      state.goods[index].num = number
+    },
+    deleteGoods(statet, index){
+      statet.goods.splice(index,1)
     }
   }
 }
