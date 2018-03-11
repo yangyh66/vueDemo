@@ -4,16 +4,21 @@
       <li><img :src="imgsrc" alt=""></li>
       <li>{{name}}</li>
       <li>{{price}}</li>
-      <li><input type="number" v-model="myNum" class="num"></li>
+      <li><input type="number" v-model="myNum" class="num" @input="changeNumber($event,index)"></li>
       <li>
-        <el-button type="primary" plain @click="open">加入购物车</el-button>
+        <el-button type="primary" plain @click="open" v-if="myFlag">加入购物车</el-button>
+        <div v-else>
+          <el-button type="primary" plain>立即结算</el-button>
+          <el-button type="primary" plain @click="myDele($el,index)">删除</el-button>
+        </div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapMutations} from 'vuex';
+
   export default{
     name: "row",
     data(){
@@ -31,8 +36,14 @@
       imgsrc: {
         required: true
       },
+      myFlag: {
+        default: true
+      },
       num: {
-        default: 1
+        default: 1,
+      },
+      index:{
+
       }
     },
     watch: {
@@ -43,6 +54,11 @@
       }
     },
     methods: {
+      ...mapMutations({
+        change: 'changeGoodsList',
+        deletes:'deleteGoods',
+        changeNum:'changeGoodsListNumber'
+      }),
       open() {
         if (this.isLogin) {
           this.$confirm('加入购物车成功，是否立即去结算', '提示', {
@@ -50,11 +66,18 @@
             confirmButtonText: '确定',
             type: 'success'
           }).then(() => {
-              this.$router.push("/car")
+            this.$router.push("/car")
           }).catch(() => {
 
           });
-        }else {
+          let goods = {
+            name: this.name,
+            imgSrc: this.imgsrc,
+            price: this.price,
+            num: this.myNum
+          }
+          this.change(goods)
+        } else {
           this.$confirm('您尚未登录，是否前去登录', '提示', {
             cancelButtonText: '取消',
             confirmButtonText: '确定',
@@ -65,6 +88,25 @@
 
           });
         }
+      },
+      myDele(e,index){
+        let Name = e.childNodes[0].children[1].textContent;
+        this.$confirm('确认删除'+Name+'?', '提示', {
+          cancelButtonText: "取消",
+          confirmButtonText: "确认",
+          type:'warning'
+        }).then(()=>{
+            this.deletes(index)
+        }).catch(()=>{
+
+        })
+      },
+      changeNumber(el,index){
+          if(location.href.slice(-4) === 'list'){
+
+          }else {
+            this.changeNum({ number: el.target.value, index})
+          }
 
       }
     },
