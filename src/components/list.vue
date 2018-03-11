@@ -10,7 +10,7 @@
       </ul>
     </li>
     <li>
-        <row v-for="(item,index) in  goods" :price="item.price" :name="item.name" :imgsrc="item.imgsrc" :key="index"></row>
+        <row v-for="(item,index) in  goods" :price="item.price" :name="item.name" :imgsrc="item.imgsrc" :key="index" :index="index"></row>
     </li>
   </ul>
   <car></car>

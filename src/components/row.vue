@@ -6,7 +6,7 @@
       <li>{{price}}</li>
       <li><input type="number" v-model="myNum" class="num" @input="changeNumber($event,index)"></li>
       <li>
-        <el-button type="primary" plain @click="open" v-if="myFlag">加入购物车</el-button>
+        <el-button type="primary" plain @click="open(index)" v-if="myFlag">加入购物车</el-button>
         <div v-else>
           <el-button type="primary" plain>立即结算</el-button>
           <el-button type="primary" plain @click="myDele($el,index)">删除</el-button>
@@ -42,9 +42,7 @@
       num: {
         default: 1,
       },
-      index:{
-
-      }
+      index: {}
     },
     watch: {
       myNum(val, oldval){
@@ -56,10 +54,10 @@
     methods: {
       ...mapMutations({
         change: 'changeGoodsList',
-        deletes:'deleteGoods',
-        changeNum:'changeGoodsListNumber'
+        deletes: 'deleteGoods',
+        changeNum: 'changeGoodsListNumber'
       }),
-      open() {
+      open(index) {
         if (this.isLogin) {
           this.$confirm('加入购物车成功，是否立即去结算', '提示', {
             cancelButtonText: '取消',
@@ -68,15 +66,20 @@
           }).then(() => {
             this.$router.push("/car")
           }).catch(() => {
-
           });
           let goods = {
             name: this.name,
             imgSrc: this.imgsrc,
             price: this.price,
             num: this.myNum
+          };
+          console.log(index)
+          if (this.isHave() === true) {
+            this.changeNum({number: this.myNum, index})
+          } else {
+            this.change(goods)
           }
-          this.change(goods)
+
         } else {
           this.$confirm('您尚未登录，是否前去登录', '提示', {
             cancelButtonText: '取消',
@@ -89,30 +92,38 @@
           });
         }
       },
-      myDele(e,index){
+      myDele(e, index){
         let Name = e.childNodes[0].children[1].textContent;
-        this.$confirm('确认删除'+Name+'?', '提示', {
+        this.$confirm('确认删除' + Name + '?', '提示', {
           cancelButtonText: "取消",
           confirmButtonText: "确认",
-          type:'warning'
-        }).then(()=>{
-            this.deletes(index)
-        }).catch(()=>{
+          type: 'warning'
+        }).then(() => {
+          this.deletes(index)
+        }).catch(() => {
 
         })
       },
-      changeNumber(el,index){
-          if(location.href.slice(-4) === 'list'){
-
-          }else {
-            this.changeNum({ number: el.target.value, index})
+      changeNumber(el, index){
+        if (location.href.slice(-4) === 'list') {
+        } else {
+          this.changeNum({number: el.target.value, index})
+        }
+      },
+      isHave() {
+        for (let i = 0; i < this.goods.length; i++) {
+          if (this.goods[i].name == this.name && this.goods[i].imgSrc == this.imgsrc && this.goods[i].price == this.price) {
+            return true
+          } else {
+            return false
           }
-
+        }
       }
     },
     computed: {
       ...mapState({
-        isLogin: (state) => state.isLogin
+        isLogin: (state) => state.isLogin,
+        goods: (state) => state.goods
       })
     }
   }
