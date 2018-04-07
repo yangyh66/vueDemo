@@ -5,6 +5,7 @@ import index from '@/components/index'
 import list from '@/components/list'
 import login from '@/components/login'
 import car from '@/components/carpage'
+import news from '@/components/news'
 
 Vue.use(Router);
 const router = new Router({
@@ -30,9 +31,15 @@ const router = new Router({
       component:car
     },
     {
+      path:'/news',
+      name:'news',
+      component:news
+    },
+    {
       path: '/',
       redirect:"index"
     }
+
   ]
 })
 

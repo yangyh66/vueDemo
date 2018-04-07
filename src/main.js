@@ -9,10 +9,10 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 Vue.use(ElementUI);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 export const myStore =new Vuex.Store(store);
 /* eslint-disable no-new */
 new Vue({
@@ -21,4 +21,4 @@ new Vue({
   store: myStore,
   components: { App },
   template: '<App/>'
-})
+});

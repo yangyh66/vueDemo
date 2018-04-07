@@ -9,20 +9,26 @@
 
 <script>
   import car from "./car.vue"
-    export default{
-      name:"index",
-      components:{car}
+  export default{
+    name: "index",
+    components: {car},
+    mounted: function () {
+      let a = ()=>{
+          return 1
+      }
+//      console.log(a)
     }
+  }
 </script>
 
 <style scoped lang="scss">
-.title{
-  margin-top: 200px;
-  h1{
-    color: red;
-    width: 30%;
-    margin: 0 auto;
-    text-align: center;
+  .title {
+    margin-top: 200px;
+    h1 {
+      color: red;
+      width: 30%;
+      margin: 0 auto;
+      text-align: center;
+    }
   }
-}
 </style>

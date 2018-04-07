@@ -50,6 +50,22 @@
           }
         });
       }
+    },
+    mounted: function () {
+//      var obj = {a:{b:10},n:2};
+//      function deepCopy(obj){
+//        if(typeof obj != 'object'){
+//          return obj;
+//        }
+//        var newobj = {};
+//        for ( var attr in obj) {
+//          newobj[attr] = deepCopy(obj[attr]);
+//        }
+//        return newobj;
+//      }
+//      var obj2 = deepCopy(obj);
+//      console.log(obj2)
+      console.log(0.1+0.2)
     }
   }
 </script>
